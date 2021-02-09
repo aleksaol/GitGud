@@ -86,11 +86,17 @@ public class GitHandler : MonoBehaviour {
         }
     }
 
-    public void Commit(string msg) {
-        if (msg.Length <= 0) {
+    public void Commit(string _msg) {
+        string msg;
+
+        if (_msg.Length <= 0) {
             // Open window to enter message
+        } else {
+            msg = _msg;
         }
+
     }
+
     public void Fetch() { }
     public void Push() { }
     public void Pull() { }

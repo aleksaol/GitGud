@@ -151,7 +151,7 @@ namespace UnityTemplateProjects
             }
             
             // Translation
-            translation = GetInputTranslationDirection() * Time.deltaTime;
+            //translation = GetInputTranslationDirection() * Time.deltaTime;
 
             // Speed up movement when shift key held
             if (Input.GetKey(KeyCode.LeftShift))

@@ -24,15 +24,13 @@ public class Commit {
     public List<GameObject> OldPos { get => oldPos; set => oldPos = value; }
     public List<GameObject> NewPos { get => newPos; set => newPos = value; }
 
-    public Commit() { timeStamp = DateTime.Now; Init(); }
-    public Commit(string _msg) { timeStamp = DateTime.Now; message = _msg; Init(); }
-    public Commit(string _msg, Commit _cmt) { timeStamp = DateTime.Now; message = _msg; parent = _cmt; Init(); }
+    public Commit() { Init(); }
+    public Commit(string _msg) { message = _msg; Init(); }
+    public Commit(string _msg, Commit _cmt) { message = _msg; parent = _cmt; Init(); }
 
     private void Init() {
         oldPos = new List<GameObject>();
         newPos = new List<GameObject>();
-
-        FindChangedObjects();
     }
 
     private void FindChangedObjects() {

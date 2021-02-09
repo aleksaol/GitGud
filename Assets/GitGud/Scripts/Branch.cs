@@ -22,8 +22,13 @@ public class Branch {
     public string Name { get => name; set => name = value; }
 
 
-    public Branch() { commits = new List<Commit>(); }
-    public Branch(string _name) { commits = new List<Commit>(); name = _name; }
-    public Branch(string _name, Commit _parent) { commits = new List<Commit>(); name = _name; parent = _parent; }
-    public Branch(string _name, Commit _parent, List<Commit> _commits) {commits = new List<Commit>(); name = _name; parent = _parent; commits = _commits; }
+    public Branch() { Init(); }
+    public Branch(string _name) { name = _name; Init(); }
+    public Branch(string _name, Commit _parent) { name = _name; parent = _parent; Init(); }
+    public Branch(string _name, Commit _parent, List<Commit> _commits) { name = _name; parent = _parent; commits = _commits; }
+
+
+    public void Init() {
+        commits = new List<Commit>();
+    }
 }
