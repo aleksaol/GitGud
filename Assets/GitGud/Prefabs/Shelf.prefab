@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 866027275821757657}
-  - component: {fileID: 866027275821757656}
   - component: {fileID: 866027275821757659}
+  - component: {fileID: -495859451908594310}
   m_Layer: 0
-  m_Name: Shelf 1
+  m_Name: Shelf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,19 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &866027275821757656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 866027275821757670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec0b6eec5b001cf40bcc531a33336a96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  books: []
 --- !u!65 &866027275821757659
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -58,3 +45,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 0.4, z: 0.45}
   m_Center: {x: -0.75, y: 0, z: 0}
+--- !u!114 &-495859451908594310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866027275821757670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1528b152e06dc5841acd677971d43e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUps: []
+  maxPickUps: 0
+  xStart: 0
+  xStep: 0
+  yStart: 0
+  yStep: 0

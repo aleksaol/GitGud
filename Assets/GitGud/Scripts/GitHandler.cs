@@ -47,7 +47,12 @@ public class GitHandler : MonoBehaviour {
     }
 
     public string GitCommand(string command) {
-        string cmd = command.ToLower();
+        string cmd = command.ToLower().Trim(' ');
+
+        if (string.IsNullOrEmpty(cmd)) {
+            return null;
+        }
+        
 
         if (cmd.Length < 4) {
             // No command
