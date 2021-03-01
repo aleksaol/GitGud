@@ -72,11 +72,11 @@ public class CharacterController : MonoBehaviour
     private Camera cam;
     private GameObject heldObject;
     private GameObject targetObject;
+    private GameObject targetContainer;
 
     private float raycastTimer = 0.0f;
-    private int interactableLayerMask;
-    private int containerLayerMask;
-    private bool holdingObject;
+    private int NotinteractableLayerMask;
+    private int NotcontainerLayerMask;
     private bool openMenu;
 
     public bool OpenMenu { get => openMenu; set => openMenu = value; }
@@ -87,9 +87,8 @@ public class CharacterController : MonoBehaviour
     }
 
     private void Awake() {
-        interactableLayerMask = 1 << 8;
-        containerLayerMask = 1 << 9;
-        holdingObject = false;
+        NotinteractableLayerMask = ~(1 << 8);
+        NotcontainerLayerMask = ~(1 << 9);
         openMenu = false;
     }
 
@@ -108,19 +107,6 @@ public class CharacterController : MonoBehaviour
         HandleInput();
     }
 
-    public void ToggleMenu() {
-        if (openMenu) {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        } else {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-
-        consoleHandler.ToggleConsole();
-        openMenu = !openMenu;
-    }
-
     private void HandleRaycast() {
         if (raycastTimer >= RAYCAST_TIME) {
 
@@ -129,19 +115,26 @@ public class CharacterController : MonoBehaviour
 
             Debug.DrawRay(transform.position, cam.transform.forward * 999999.0f, Color.red);
 
-            if (holdingObject) {
-                if (Physics.Raycast(rayOrigin, cam.transform.forward, out hit, 999999.0f, containerLayerMask)) {
+            if (heldObject != null) {
+                targetObject = null;
+
+                if (Physics.Raycast(rayOrigin, cam.transform.forward, out hit, 999999.0f, NotinteractableLayerMask)) {
                     Debug.DrawRay(transform.position, cam.transform.forward * hit.distance, Color.yellow);
                     if (hit.transform.CompareTag("Container")) {
-                        Debug.Log("Container");
+                        targetContainer = hit.transform.gameObject;
+                    } else {
+                        targetContainer = null;
                     }
+                } else {
+                    targetContainer = null;
                 }
             } else {
+                targetContainer = null;
+
                 // Check if our raycast has hit anything
-                if (Physics.Raycast(rayOrigin, cam.transform.forward, out hit, 999999.0f, interactableLayerMask)) {
+                if (Physics.Raycast(rayOrigin, cam.transform.forward, out hit, 999999.0f, NotcontainerLayerMask)) {
                     Debug.DrawRay(transform.position, cam.transform.forward * hit.distance, Color.yellow);
                     if (hit.transform.CompareTag("Interactable")) {
-                        Debug.Log("Interactable");
                         targetObject = hit.transform.gameObject;
                         ToggleReticle(false);
                     } else {
@@ -166,15 +159,19 @@ public class CharacterController : MonoBehaviour
         // Exit Sample  
         if (Input.GetKey(KeyCode.Escape)) {
             Application.Quit();
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-#endif
+            #endif
         }
 
+        if (Input.GetMouseButtonUp(0)) {
+            PickUpObject();
+            PlaceObject();
+        }
         
 
         if (Input.GetKeyUp(KeyCode.Tab)) {
-            ToggleMenu();
+            ToggleConsole();
         }
 
     }
@@ -208,10 +205,33 @@ public class CharacterController : MonoBehaviour
             defaultReticle.SetActive(false);
             targetReticle.SetActive(true);
         }
+    }
+
+    public void ToggleConsole() {
+        if (openMenu) {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        } else {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        consoleHandler.ToggleConsole();
+        openMenu = !openMenu;
+    }
+
+    private void PickUpObject() {
+        if (heldObject == null && targetObject != null) {
+            targetObject.GetComponent<PickUp>().OnPickUp();
+            heldObject = targetObject;
+        }
         
     }
 
-    private void HoldObject() {
-
+    private void PlaceObject() {
+        if (heldObject != null && targetContainer != null) {
+            heldObject.GetComponent<PickUp>().OnPlacement(targetContainer.GetComponent<Container>());
+            heldObject = null;
+        }
     }
 }

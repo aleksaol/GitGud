@@ -17,16 +17,39 @@ public class Container : MonoBehaviour
     private float yStart;
     [SerializeField]
     private float yStep;
+    [SerializeField]
+    private float zStart;
+    [SerializeField]
+    private float zStep;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        PositionPickUps();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void RemovePickUp(PickUp _pickUp) {
+        pickUps.Remove(_pickUp);
+        PositionPickUps();
+    }
+
+    public void PlacePickUp(PickUp _pickUp) {
+        pickUps.Add(_pickUp);
+        PositionPickUps();
+    }
+
+    private void PositionPickUps() {
+        for (int i = 0; i < pickUps.Count; i++) {
+            float xPos = xStart + (i * xStep);
+            float yPos = yStart + (i * yStep);
+            float zPos = zStart + (i * zStep);
+            pickUps[i].transform.localPosition = new Vector3(xPos, yPos, zPos);
+        }
     }
 }

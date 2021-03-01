@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 866027275821757657}
   - component: {fileID: 866027275821757659}
   - component: {fileID: -495859451908594310}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shelf
-  m_TagString: Untagged
+  m_TagString: Container
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,3 +63,5 @@ MonoBehaviour:
   xStep: 0
   yStart: 0
   yStep: 0
+  zStart: 0
+  zStep: 0
