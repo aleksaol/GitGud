@@ -44,11 +44,18 @@ public class ConsoleHandler : MonoBehaviour
     }
 
     public void cmdInput(InputField _cmdLine) {
+
+        if (!consoleIsOpen) {
+            return;
+        }
+
         string cmd = _cmdLine.text.Trim(' ');
         string feedback = gitHandler.GitCommand(cmd);
+        
 
         _cmdLine.text = "";
         commandLine.Select();
+        commandLine.ActivateInputField();
 
         if (string.IsNullOrEmpty(cmd)) {
             return;
@@ -66,15 +73,16 @@ public class ConsoleHandler : MonoBehaviour
     public void ToggleConsole() {
         if (consoleIsOpen) {
             // Close console
-            animator.SetBool("ConsoleState", false);
+            consoleIsOpen = false;
+            commandLine.text = "";
             commandLine.DeactivateInputField();
+            animator.SetBool("ConsoleState", false);
         } else {
             // Open console
+            consoleIsOpen = true;
             animator.SetBool("ConsoleState", true);
-            commandLine.Select();
             commandLine.ActivateInputField();
+            commandLine.Select();
         }
-
-        consoleIsOpen = !consoleIsOpen;
     }
 }

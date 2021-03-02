@@ -21,6 +21,8 @@ public class Container : MonoBehaviour
     private float zStart;
     [SerializeField]
     private float zStep;
+    [SerializeField]
+    private Vector3 placedRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +52,8 @@ public class Container : MonoBehaviour
             float yPos = yStart + (i * yStep);
             float zPos = zStart + (i * zStep);
             pickUps[i].transform.localPosition = new Vector3(xPos, yPos, zPos);
+
+            pickUps[i].transform.localRotation = Quaternion.Euler(placedRotation);
         }
     }
 }

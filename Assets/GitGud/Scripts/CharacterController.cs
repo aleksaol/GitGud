@@ -77,9 +77,9 @@ public class CharacterController : MonoBehaviour
     private float raycastTimer = 0.0f;
     private int NotinteractableLayerMask;
     private int NotcontainerLayerMask;
-    private bool openMenu;
+    private bool consoleIsOpen;
 
-    public bool OpenMenu { get => openMenu; set => openMenu = value; }
+    public bool OpenMenu { get => consoleIsOpen; set => consoleIsOpen = value; }
 
     void OnEnable() {
         m_TargetCameraState.SetFromTransform(transform);
@@ -89,7 +89,7 @@ public class CharacterController : MonoBehaviour
     private void Awake() {
         NotinteractableLayerMask = ~(1 << 8);
         NotcontainerLayerMask = ~(1 << 9);
-        openMenu = false;
+        consoleIsOpen = false;
     }
 
     // Start is called before the first frame update
@@ -122,11 +122,14 @@ public class CharacterController : MonoBehaviour
                     Debug.DrawRay(transform.position, cam.transform.forward * hit.distance, Color.yellow);
                     if (hit.transform.CompareTag("Container")) {
                         targetContainer = hit.transform.gameObject;
+                        ToggleReticle(false);
                     } else {
                         targetContainer = null;
+                        ToggleReticle(true);
                     }
                 } else {
                     targetContainer = null;
+                    ToggleReticle(true);
                 }
             } else {
                 targetContainer = null;
@@ -139,10 +142,11 @@ public class CharacterController : MonoBehaviour
                         ToggleReticle(false);
                     } else {
                         targetObject = null;
+                        ToggleReticle(true);
                     }
                 } else {
-                    ToggleReticle(true);
                     targetObject = null;
+                    ToggleReticle(true);
                 }
             }
 
@@ -164,7 +168,7 @@ public class CharacterController : MonoBehaviour
             #endif
         }
 
-        if (Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0) && !consoleIsOpen) {
             PickUpObject();
             PlaceObject();
         }
@@ -179,13 +183,15 @@ public class CharacterController : MonoBehaviour
     private void HandleCamera() {
 
         // Rotation
-        if (!openMenu) {
+        if (!consoleIsOpen) {
             var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
 
             var mouseSensitivityFactor = mouseSensitivityCurve.Evaluate(mouseMovement.magnitude);
 
             m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivityFactor;
             m_TargetCameraState.pitch += mouseMovement.y * mouseSensitivityFactor;
+
+            m_TargetCameraState.pitch = Mathf.Clamp(m_TargetCameraState.pitch, -50.0f, 50.0f);
         }
 
         // Framerate-independent interpolation
@@ -208,7 +214,7 @@ public class CharacterController : MonoBehaviour
     }
 
     public void ToggleConsole() {
-        if (openMenu) {
+        if (consoleIsOpen) {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         } else {
@@ -217,7 +223,7 @@ public class CharacterController : MonoBehaviour
         }
 
         consoleHandler.ToggleConsole();
-        openMenu = !openMenu;
+        consoleIsOpen = !consoleIsOpen;
     }
 
     private void PickUpObject() {

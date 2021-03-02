@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866027275821757670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 1.97, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.8, y: 0.4, z: 0.45}
-  m_Center: {x: -0.75, y: 0, z: 0}
+  m_Size: {x: 2.6, y: 0.54, z: 0.37}
+  m_Center: {x: -1.2, y: 0.01, z: 0}
 --- !u!114 &-495859451908594310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,10 +58,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickUps: []
-  maxPickUps: 0
+  maxPickUps: 7
   xStart: 0
-  xStep: 0
+  xStep: -0.225
   yStart: 0
   yStep: 0
   zStart: 0
   zStep: 0
+  placedRotation: {x: 0, y: 180, z: 0}
