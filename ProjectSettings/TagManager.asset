@@ -7,6 +7,8 @@ TagManager:
   - Interactable
   - Container
   - InteractableContainer
+  - Mesh
+  - Transparent
   layers:
   - Default
   - TransparentFX

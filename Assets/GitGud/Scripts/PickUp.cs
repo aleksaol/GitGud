@@ -15,6 +15,8 @@ public class PickUp : MonoBehaviour
     private float heldDistance = 2.0f;
 
     private Camera cam;
+    private GameObject visable;
+    private GameObject transparent;
 
     private bool isHeld;
 
@@ -23,6 +25,8 @@ public class PickUp : MonoBehaviour
     private void Awake() {
         isHeld = false;
         cam = Camera.main;
+        visable = transform.GetChild(0).gameObject;
+        transparent = transform.GetChild(1).gameObject;
     }
 
     // Update is called once per frame
@@ -37,6 +41,10 @@ public class PickUp : MonoBehaviour
     public void OnPickUp() {
         isHeld = true;
         transform.parent = null;
+
+        transparent.SetActive(true);
+        visable.SetActive(false);
+
         container.RemovePickUp(this);
         container = null;
     }
@@ -46,6 +54,9 @@ public class PickUp : MonoBehaviour
         container = _container;
         transform.parent = container.transform;
         transform.localRotation = Quaternion.identity;
+
+        visable.SetActive(true);
+        transparent.SetActive(false);
         container.PlacePickUp(this);
     }
 
