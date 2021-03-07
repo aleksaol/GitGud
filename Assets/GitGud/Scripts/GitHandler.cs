@@ -22,28 +22,23 @@ public class GitHandler : MonoBehaviour {
 
 
     private void Awake() {
-        branches = new List<Branch> {
-            new Branch("Main")
-        };
-
-        currentBranch = FindBranch("Main");
-        if(currentBranch == null) {
-            Debug.LogError("NO MAIN BRANCH CREATED");
-        } else {
-            currentCommit = new Commit("Initial Commit");
-            currentBranch.Commits.Add(currentCommit);
-        }
+        
 
     }
 
     // Start is called before the first frame update
     void Start() {
+        branches = new List<Branch> {
+            new Branch("Main")
+        };
 
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+        currentBranch = FindBranch("Main");
+        if (currentBranch == null) {
+            Debug.LogError("NO MAIN BRANCH CREATED");
+        } else {
+            currentCommit = new Commit("Initial Commit");
+            currentBranch.Commits.Add(currentCommit);
+        }
     }
 
     public string GitCommand(string command) {
@@ -121,14 +116,15 @@ public class GitHandler : MonoBehaviour {
     }
 
     public void Commit(string _msg) {
-        string msg;
 
         if (_msg.Length <= 0) {
             // Open window to enter message
             Debug.Log("NO COMMIT MESSAGE");
         } else {
-            msg = _msg;
-            Debug.Log(msg);
+            Commit temp = new Commit(_msg);
+            temp.Parent = currentCommit;
+            currentCommit = temp;
+            currentBranch.Commits.Add(currentCommit);
         }
     }
 

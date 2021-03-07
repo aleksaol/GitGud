@@ -22,6 +22,8 @@ public class ConsoleHandler : MonoBehaviour
 
     private bool consoleIsOpen;
 
+    public bool ConsoleIsOpen { get => consoleIsOpen; set => consoleIsOpen = value; }
+
     private void Awake() {
         consoleIsOpen = false;
 

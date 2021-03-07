@@ -67,6 +67,8 @@ public class CharacterController : MonoBehaviour
     private GameObject defaultReticle;
     [SerializeField]
     private GameObject targetReticle;
+    [SerializeField]
+    private UIHandler uiHandler;
 
     private RaycastHit hit;
     private Camera cam;
@@ -77,9 +79,9 @@ public class CharacterController : MonoBehaviour
     private float raycastTimer = 0.0f;
     private int NotinteractableLayerMask;
     private int NotcontainerLayerMask;
-    private bool consoleIsOpen;
+    private bool lockCamera;
 
-    public bool OpenMenu { get => consoleIsOpen; set => consoleIsOpen = value; }
+    public bool OpenMenu { get => lockCamera; set => lockCamera = value; }
 
     void OnEnable() {
         m_TargetCameraState.SetFromTransform(transform);
@@ -89,7 +91,7 @@ public class CharacterController : MonoBehaviour
     private void Awake() {
         NotinteractableLayerMask = ~(1 << 8);
         NotcontainerLayerMask = ~(1 << 9);
-        consoleIsOpen = false;
+        lockCamera = false;
     }
 
     // Start is called before the first frame update
@@ -168,14 +170,22 @@ public class CharacterController : MonoBehaviour
             #endif
         }
 
-        if (Input.GetMouseButtonUp(0) && !consoleIsOpen) {
+        if (Input.GetMouseButtonUp(0) && !lockCamera) {
             PickUpObject();
             PlaceObject();
         }
         
 
         if (Input.GetKeyUp(KeyCode.Tab)) {
-            ToggleConsole();
+            if (consoleHandler.ConsoleIsOpen) {
+                ToggleConsole(false);
+            } else {
+                ToggleConsole(true);
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Q)) {
+            uiHandler.ToggleCommitMessage(true);
         }
 
     }
@@ -183,7 +193,7 @@ public class CharacterController : MonoBehaviour
     private void HandleCamera() {
 
         // Rotation
-        if (!consoleIsOpen) {
+        if (!lockCamera) {
             var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
 
             var mouseSensitivityFactor = mouseSensitivityCurve.Evaluate(mouseMovement.magnitude);
@@ -213,8 +223,8 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public void ToggleConsole() {
-        if (consoleIsOpen) {
+    public void ToggleCursorMode(bool _lock) {
+        if (_lock) {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         } else {
@@ -222,8 +232,18 @@ public class CharacterController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
+        lockCamera = !_lock;
+    }
+
+    public void ToggleConsole(bool _open) {
+        if (_open) {
+            ToggleCursorMode(false);
+        } else {
+            ToggleCursorMode(true);
+        }
+
         consoleHandler.ToggleConsole();
-        consoleIsOpen = !consoleIsOpen;
+        
     }
 
     private void PickUpObject() {
