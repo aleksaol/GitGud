@@ -9,11 +9,8 @@ public class GitHandler : MonoBehaviour {
     public const string UNKNOWN_GIT = "Unknown Git command. ";
     public const string HELP = "Type 'Help' for help.";
 
-    [SerializeField]
     private List<Branch> branches;
-    [SerializeField]
     private Branch currentBranch;
-    [SerializeField]
     private Commit currentCommit;
 
     public List<Branch> Branches { get => branches; set => branches = value; }
@@ -22,23 +19,25 @@ public class GitHandler : MonoBehaviour {
 
 
     private void Awake() {
+        branches = new List<Branch>();
+        string main = "Main";
+
+        if (CheckBranchName(main)) {
+            Branch temp = new Branch(main);
+            temp.Init(null);
+            branches.Add(temp);
+            currentBranch = FindBranch(main);
+        }
+
         
-
-    }
-
-    // Start is called before the first frame update
-    void Start() {
-        branches = new List<Branch> {
-            new Branch("Main")
-        };
-
-        currentBranch = FindBranch("Main");
         if (currentBranch == null) {
             Debug.LogError("NO MAIN BRANCH CREATED");
         } else {
             currentCommit = new Commit("Initial Commit");
+            currentCommit.Init(null);
             currentBranch.Commits.Add(currentCommit);
         }
+
     }
 
     public string GitCommand(string command) {
@@ -122,7 +121,7 @@ public class GitHandler : MonoBehaviour {
             Debug.Log("NO COMMIT MESSAGE");
         } else {
             Commit temp = new Commit(_msg);
-            temp.Parent = currentCommit;
+            temp.Init(currentCommit);
             currentCommit = temp;
             currentBranch.Commits.Add(currentCommit);
         }
@@ -132,7 +131,43 @@ public class GitHandler : MonoBehaviour {
     public void Push() { }
     public void Pull() { }
     public void Branch() { }
-    public void Checkout() { }
+    public void Checkout(string _ID, bool _isBranch) {
+        Commit commitToCheckout;
+        bool found = false;
+        
+        if (_isBranch) {
+            foreach (Branch branch in branches) {
+                if (branch.Name.ToLower().Equals(_ID.ToLower())) {
+                    currentBranch = branch;
+                    currentCommit = branch.Commits[branch.Commits.Count - 1];
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                Debug.Log("NO BRANCH WITH THAT NAME FOUND");
+            }
+        } else {
+            foreach (Branch branch in branches) {
+                commitToCheckout = branch.FindCommit(_ID);
+
+                if (commitToCheckout != null) {
+                    currentBranch = branch;
+                    currentCommit = commitToCheckout;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                Debug.Log("NO COMMIT WITH THAT CODE FOUND");
+            }
+        }
+
+        Debug.Log("Current branch and commit ID: " + currentBranch.Name + " - " + currentCommit.Id.Code);
+        
+    }
     public void Merge() { }
     public void Rebase() { }
     public void ResetCmd() { }

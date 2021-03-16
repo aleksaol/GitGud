@@ -5,13 +5,9 @@ using UnityEngine;
 
 public class Branch {
 
-    [SerializeField]
     private Commit parent;
-    [SerializeField]
     private Commit merger;
-    [SerializeField]
     private List<Commit> commits;
-    [SerializeField]
     private string name;
 
 
@@ -21,13 +17,24 @@ public class Branch {
     public string Name { get => name; set => name = value; }
 
 
-    public Branch() { Init(); }
-    public Branch(string _name) { name = _name; Init(); }
-    public Branch(string _name, Commit _parent) { name = _name; parent = _parent; Init(); }
+    public Branch() { }
+    public Branch(string _name) { name = _name; }
+    public Branch(string _name, Commit _parent) { name = _name; parent = _parent; }
     public Branch(string _name, Commit _parent, List<Commit> _commits) { name = _name; parent = _parent; commits = _commits; }
 
 
-    public void Init() {
+    public void Init(Commit _parent) {
         commits = new List<Commit>();
+        parent = _parent;
+    }
+
+    public Commit FindCommit(string _ID) {
+        foreach (Commit commit in commits) {
+            if (commit.Id.Code.ToLower().Equals(_ID.ToLower())) {
+                return commit;
+            }
+        }
+
+        return null;
     }
 }

@@ -184,8 +184,12 @@ public class CharacterController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Q)) {
-            uiHandler.ToggleCommitMessage(true);
+        if (!lockCamera) {
+            if (Input.GetKeyUp(KeyCode.Q)) {
+                uiHandler.ToggleCommitMessage(true);
+            } else if (Input.GetKeyUp(KeyCode.W)) {
+                uiHandler.ToggleCheckoutMessage(true);
+            }
         }
 
     }

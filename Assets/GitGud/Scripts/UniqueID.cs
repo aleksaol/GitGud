@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UniqueID
 {
-    public static List<string> codes = new List<string>() { "test" };
+    public static List<string> codes = new List<string>();
     public const string SRC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     public const int CODE_LENGTH = 4;
 

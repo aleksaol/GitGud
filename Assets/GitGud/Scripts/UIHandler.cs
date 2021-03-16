@@ -13,9 +13,10 @@ public class UIHandler : MonoBehaviour
     [SerializeField]
     private GameObject commitPopUp;
     [SerializeField]
-    private InputField commitInputField;
-    [SerializeField]
-    private Button commitConfirmBtn;
+    private GameObject checkoutPopUp;
+
+
+    private InputField activeInputField;
 
     
 
@@ -31,38 +32,69 @@ public class UIHandler : MonoBehaviour
         
     }
 
-    public void CheckCommitMessage() {
-        if (string.IsNullOrWhiteSpace(commitInputField.text)) {
-            commitConfirmBtn.interactable = false;
+    public void SetActiveInputField(InputField _inputField) {
+        activeInputField = _inputField;
+    }
+
+    public void CheckForEmptyMessage(Button _confirmBtn) {
+        if (string.IsNullOrWhiteSpace(activeInputField.text)) {
+            _confirmBtn.interactable = false;
         } else {
-            commitConfirmBtn.interactable = true;
+            _confirmBtn.interactable = true;
         }
     }
 
     public void Commit() {
-        if (!string.IsNullOrWhiteSpace(commitInputField.text)) {
-            gitHandler.Commit(commitInputField.text);
+        if (!string.IsNullOrWhiteSpace(activeInputField.text)) {
+            gitHandler.Commit(activeInputField.text);
             ToggleCommitMessage(false);
         }
     }
 
-    public void ToggleCommitMessage(bool _open) {
+    public void Checkout() {
+        bool branch = checkoutPopUp.GetComponentInChildren<Toggle>().isOn;
 
+        if (!string.IsNullOrWhiteSpace(activeInputField.text)) {
+            gitHandler.Checkout(activeInputField.text, branch);
+            ToggleCheckoutMessage(false);
+        }
+    }
+
+    public void ToggleCommitMessage(bool _open) {
+        TogglePopUp(commitPopUp, _open);
+    }
+
+    public void ToggleCheckoutMessage(bool _open) {
+        TogglePopUp(checkoutPopUp, _open);
+    }
+
+    private void TogglePopUp(GameObject _popUp, bool _open) {
         if (_open) {
-            if (commitPopUp.activeSelf) {
+            if (_popUp.activeSelf) {
                 return;
             }
+
             character.ToggleCursorMode(false);
-            commitPopUp.SetActive(true);
-            commitInputField.text = "";
-            commitInputField.ActivateInputField();
-            commitInputField.Select();
+            _popUp.SetActive(true);
+            activeInputField = _popUp.GetComponentInChildren<InputField>();
+            ToggleInputField(true);
         } else {
             character.ToggleCursorMode(true);
-            commitPopUp.SetActive(false);
-            commitInputField.text = "";
-            commitInputField.DeactivateInputField();
+            _popUp.SetActive(false);
+            ToggleInputField(false);
+            activeInputField = null;
         }
     }
     
+
+    private void ToggleInputField(bool _activate) {
+        if (_activate) {
+            activeInputField.text = "";
+            activeInputField.ActivateInputField();
+            activeInputField.Select();
+        } else {
+            activeInputField.text = "";
+            activeInputField.DeactivateInputField();
+        }
+    }
 }
