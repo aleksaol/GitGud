@@ -35,8 +35,11 @@ public class GitHandler : MonoBehaviour {
         } else {
             currentCommit = new Commit("Initial Commit");
             currentCommit.Init(null);
+            currentCommit.SaveStatus();
             currentBranch.Commits.Add(currentCommit);
         }
+
+        LoadCurrentCommit();
 
     }
 
@@ -119,9 +122,16 @@ public class GitHandler : MonoBehaviour {
         if (_msg.Length <= 0) {
             // Open window to enter message
             Debug.Log("NO COMMIT MESSAGE");
+        } else if (currentBranch == null) {
+            Commit temp = new Commit(_msg);
+            temp.Init(currentCommit);
+            temp.SaveStatus();
+            currentCommit = temp;
+            currentBranch.Commits.Add(currentCommit);
         } else {
             Commit temp = new Commit(_msg);
             temp.Init(currentCommit);
+            temp.SaveStatus();
             currentCommit = temp;
             currentBranch.Commits.Add(currentCommit);
         }
@@ -132,14 +142,14 @@ public class GitHandler : MonoBehaviour {
     public void Pull() { }
     public void Branch() { }
     public void Checkout(string _ID, bool _isBranch) {
-        Commit commitToCheckout;
+        Commit commitToCheckout = null;
+        Branch branchToCheckout = null;
         bool found = false;
         
         if (_isBranch) {
             foreach (Branch branch in branches) {
                 if (branch.Name.ToLower().Equals(_ID.ToLower())) {
-                    currentBranch = branch;
-                    currentCommit = branch.Commits[branch.Commits.Count - 1];
+                    branchToCheckout = branch;
                     found = true;
                     break;
                 }
@@ -147,14 +157,13 @@ public class GitHandler : MonoBehaviour {
 
             if (!found) {
                 Debug.Log("NO BRANCH WITH THAT NAME FOUND");
+                return;
             }
         } else {
             foreach (Branch branch in branches) {
                 commitToCheckout = branch.FindCommit(_ID);
 
                 if (commitToCheckout != null) {
-                    currentBranch = branch;
-                    currentCommit = commitToCheckout;
                     found = true;
                     break;
                 }
@@ -162,10 +171,21 @@ public class GitHandler : MonoBehaviour {
 
             if (!found) {
                 Debug.Log("NO COMMIT WITH THAT CODE FOUND");
+                return;
             }
         }
 
-        Debug.Log("Current branch and commit ID: " + currentBranch.Name + " - " + currentCommit.Id.Code);
+        if (branchToCheckout != null) {
+            currentBranch = branchToCheckout;
+            currentCommit = currentBranch.Commits[currentBranch.Commits.Count - 1];
+        } else if (commitToCheckout != null) {
+            currentBranch = null;
+            currentCommit = commitToCheckout;
+        }
+
+        LoadCurrentCommit();
+        
+        Debug.Log("Current commit ID: " + currentCommit.Id.Code);
         
     }
     public void Merge() { }
@@ -197,5 +217,18 @@ public class GitHandler : MonoBehaviour {
         }
 
         return null;
+    }
+
+    private void LoadCurrentCommit() {
+        foreach (GameObject _obj in GameObject.FindGameObjectsWithTag("Container")) {
+            List<PickUp> tempList;
+            if (currentCommit.Status.TryGetValue(_obj, out tempList)) {
+                _obj.GetComponent<Container>().PickUps.Clear();
+                _obj.GetComponent<Container>().PickUps.AddRange(tempList);
+                _obj.GetComponent<Container>().PositionPickUps();
+            } else {
+                Debug.LogError("Object not found in dictionary");
+            }
+        }
     }
 }

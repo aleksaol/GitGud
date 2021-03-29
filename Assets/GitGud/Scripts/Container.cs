@@ -24,6 +24,9 @@ public class Container : MonoBehaviour
     [SerializeField]
     private Vector3 placedRotation;
 
+
+    public List<PickUp> PickUps { get => pickUps; set => pickUps = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +49,10 @@ public class Container : MonoBehaviour
         PositionPickUps();
     }
 
-    private void PositionPickUps() {
+    public void PositionPickUps() {
         for (int i = 0; i < pickUps.Count; i++) {
+            pickUps[i].transform.parent = transform;
+
             float xPos = xStart + (i * xStep);
             float yPos = yStart + (i * yStep);
             float zPos = zStart + (i * zStep);

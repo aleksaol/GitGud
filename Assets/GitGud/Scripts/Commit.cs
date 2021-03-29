@@ -12,7 +12,7 @@ public class Commit {
 
     private DateTime timeStamp;
     private UniqueID id;
-    private List<Container> containers;
+    private Dictionary<GameObject, List<PickUp>> status;
 
     public Commit Parent { get => parent; set => parent = value; }
     public Commit SecondParent { get => secondParent; set => secondParent = value; }
@@ -20,7 +20,7 @@ public class Commit {
     public string Tag { get => tag; set => tag = value; }
     public DateTime TimeStamp { get => timeStamp; set => timeStamp = value; }
     public UniqueID Id { get => id; set => id = value; }
-    public List<Container> Containers { get => containers; set => containers = value; }
+    public Dictionary<GameObject, List<PickUp>> Status { get => status; set => status = value; }
 
     public Commit() { }
     public Commit(string _msg) { message = _msg; }
@@ -30,17 +30,24 @@ public class Commit {
         id.GenerateCode();
         Debug.Log(id.Code);
         timeStamp = DateTime.Now;
-        containers = new List<Container>();
+        status = new Dictionary<GameObject, List<PickUp>>();
 
         parent = _parent;
         secondParent = _secondParent;
+
     }
 
-    private void StoreChanges(Transform _interactable) {
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Container")) {
-            Container temp = new Container();
-            temp = obj.GetComponent<Container>();
-            containers.Add(temp);
+    public void SaveStatus(Dictionary<GameObject, List<PickUp>> _status = null) {
+        if (_status == null) {
+            status = new Dictionary<GameObject, List<PickUp>>();
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Container")) {
+                List<PickUp> temp = new List<PickUp>();
+                temp.AddRange(obj.GetComponent<Container>().PickUps);
+                status.Add(obj, temp);
+            }
+        } else {
+            status = _status;
         }
     }
+
 }
