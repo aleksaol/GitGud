@@ -1,13 +1,19 @@
-﻿using System.Collections;
+﻿using Databox;
+using Databox.Dictionary;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GitHandler : MonoBehaviour {
 
     public const string NOT_GIT = "Not a Git command. ";
     public const string UNKNOWN_GIT = "Unknown Git command. ";
     public const string HELP = "Type 'Help' for help.";
+
+    [SerializeField]
+    private DatabaseHandler databaseHandler;
 
     private List<Branch> branches;
     private Branch currentBranch;
@@ -19,10 +25,12 @@ public class GitHandler : MonoBehaviour {
 
 
     private void Awake() {
-        branches = new List<Branch>();
-        string main = "Main";
 
-        if (CheckBranchName(main)) {
+        branches = new List<Branch>();
+
+        StartCoroutine(LoadDatabaseRoutine());
+
+        /*if (CheckBranchName(main)) {
             Branch temp = new Branch(main);
             temp.Init(null);
             branches.Add(temp);
@@ -39,7 +47,48 @@ public class GitHandler : MonoBehaviour {
             currentBranch.Commits.Add(currentCommit);
         }
 
-        LoadCurrentCommit();
+        LoadCurrentCommit();*/
+
+    }
+
+    private IEnumerator LoadDatabaseRoutine() {
+        while (!databaseHandler.LevelDatabaseLoaded) {
+            yield return null;
+        }
+
+        string main = "Main";
+        string levelTable = SceneManager.GetActiveScene().name;
+
+        OrderedDictionary<string, DataboxObject.DatabaseEntry> data = databaseHandler.LoadLevel(levelTable);
+
+        foreach (string entryBranch in data.Keys) {
+            databaseHandler.LevelsDB.RegisterToDatabase(databaseHandler.RuntimeDB, levelTable, entryBranch, entryBranch);
+
+            if (CheckBranchName(entryBranch)) {
+                Branch tempBranch = new Branch(entryBranch);
+                tempBranch.Init(null);
+                branches.Add(tempBranch);
+
+                Dictionary<string, Dictionary<Type, DataboxType>> valueCommits = databaseHandler.RuntimeDB.GetValuesFromEntry(levelTable, entryBranch);
+
+                foreach (string valueCommit in valueCommits.Keys) {
+                    Commit tempCommit = databaseHandler.RuntimeDB.GetData<Commit>(levelTable, entryBranch, valueCommit);
+
+                    Commit newCommit = new Commit(tempCommit.Message);
+                    newCommit.Init(FindCommit(tempCommit.ParentOneID), FindCommit(tempCommit.ParentTwoID), valueCommit);
+                    newCommit.Tag = tempCommit.Tag;
+                    newCommit.SaveStatus(tempCommit.State);
+                    tempBranch.Commits.Add(newCommit);
+                }
+            } else {
+                Debug.LogError("ERROR! Branch alreday exists!");
+            }
+        }
+
+        Checkout(main, true);
+
+        Debug.Log("Current branch: " + currentBranch.Name);
+        Debug.Log("Current commit: " + currentCommit.Id.Code);
 
     }
 
@@ -219,12 +268,31 @@ public class GitHandler : MonoBehaviour {
         return null;
     }
 
+    private Commit FindCommit(string _id) {
+        Commit commit;
+
+        foreach (Branch _branch in branches) {
+            commit = _branch.FindCommit(_id);
+            if (commit != null) {
+                return commit;
+            }
+        }
+
+        return null;
+    }
+
     private void LoadCurrentCommit() {
         foreach (GameObject _obj in GameObject.FindGameObjectsWithTag("Container")) {
-            List<PickUp> tempList;
-            if (currentCommit.Status.TryGetValue(_obj, out tempList)) {
+            List<string> tempList;
+            
+            if (currentCommit.State.TryGetValue(_obj.name.ToString(), out tempList)) {
                 _obj.GetComponent<Container>().PickUps.Clear();
-                _obj.GetComponent<Container>().PickUps.AddRange(tempList);
+                
+                foreach (string _objName in tempList) {
+                    GameObject temp = GameObject.Find(_objName);
+                    _obj.GetComponent<Container>().PickUps.Add(temp);
+                }
+
                 _obj.GetComponent<Container>().PositionPickUps();
             } else {
                 Debug.LogError("Object not found in dictionary");

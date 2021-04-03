@@ -45,7 +45,7 @@ public class PickUp : MonoBehaviour
         transparent.SetActive(true);
         visable.SetActive(false);
 
-        container.RemovePickUp(this);
+        container.RemovePickUp(gameObject);
         container = null;
     }
 
@@ -57,7 +57,7 @@ public class PickUp : MonoBehaviour
 
         visable.SetActive(true);
         transparent.SetActive(false);
-        container.PlacePickUp(this);
+        container.PlacePickUp(gameObject);
     }
 
     private Vector3 GetHeldForwardVector() {

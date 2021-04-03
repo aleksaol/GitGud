@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GitGud/Scenes/Main.unity
+    path: Assets/GitGud/Scenes/Level 1.unity
     guid: 8c65803ca549ecf4b8d06da9ae8dc8c9
   m_configObjects: {}

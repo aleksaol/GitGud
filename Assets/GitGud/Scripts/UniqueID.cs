@@ -10,6 +10,7 @@ public class UniqueID
 
     private System.Random RNG;
 
+    [SerializeField]
     private string code;
 
     public string Code { get => code; set => code = value; }
@@ -17,16 +18,34 @@ public class UniqueID
 
     public UniqueID() { RNG = new System.Random(); }
 
-    public void GenerateCode() {
+    public void GenerateCode(string _code = "") {
+        
+        // If code already generated, return
+        if (!string.IsNullOrEmpty(code)) {
+            return;
+        }
 
-        do {
-            code = "";
-            for (int i = 0; i < CODE_LENGTH; i++) {
-                char next = SRC[RNG.Next(0, SRC.Length)];
-                code += next;
+        // If parameter code is invalid or already registered, print error.
+        // else set code and add to list of codes.
+        if (!string.IsNullOrEmpty(_code)) {
+            if (_code.Length != CODE_LENGTH) {
+                Debug.LogError("Trying to create code with invalid length");
+            } else if(codes.Contains(_code)) {
+                Debug.LogError("Trying to add code that allready exists");
+            } else {
+                codes.Add(_code);
+                code = _code;
             }
-        } while (codes.Contains(code));
+        } else {
+            do {
+                code = "";
+                for (int i = 0; i < CODE_LENGTH; i++) {
+                    char next = SRC[RNG.Next(0, SRC.Length)];
+                    code += next;
+                }
+            } while (codes.Contains(code));
 
-        codes.Add(code);
+            codes.Add(code);
+        }
     }
 }

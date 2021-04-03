@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Databox;
 
 public class Container : MonoBehaviour
 {
     [SerializeField]
-    private List<PickUp> pickUps;
+    private List<GameObject> pickUps;
     [SerializeField]
     private int maxPickUps;
 
@@ -25,26 +26,15 @@ public class Container : MonoBehaviour
     private Vector3 placedRotation;
 
 
-    public List<PickUp> PickUps { get => pickUps; set => pickUps = value; }
+    public List<GameObject> PickUps { get => pickUps; set => pickUps = value; }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        PositionPickUps();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void RemovePickUp(PickUp _pickUp) {
+    public void RemovePickUp(GameObject _pickUp) {
         pickUps.Remove(_pickUp);
         PositionPickUps();
     }
 
-    public void PlacePickUp(PickUp _pickUp) {
+    public void PlacePickUp(GameObject _pickUp) {
         pickUps.Add(_pickUp);
         PositionPickUps();
     }

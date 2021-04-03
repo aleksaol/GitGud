@@ -2,17 +2,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Databox;
+using UnityEditor;
 
-public class Commit {
+[Serializable]
+[DataboxTypeAttribute(Name = "Commit Class")]
+public class Commit : DataboxType {
 
     private Commit parent;
     private Commit secondParent;
+    [SerializeField]
     private string message;
+    [SerializeField]
     private string tag;
 
+    [SerializeField]
     private DateTime timeStamp;
+    [SerializeField]
     private UniqueID id;
-    private Dictionary<GameObject, List<PickUp>> status;
+    [SerializeField]
+    private Dictionary<string, List<string>> state = new Dictionary<string, List<string>>();
+
+    [SerializeField]
+    private string parentOneID = "";
+    [SerializeField]
+    private string parentTwoID = "";
+
+    GameObject container = null;
+    List<GameObject> pickUps = new List<GameObject>();
 
     public Commit Parent { get => parent; set => parent = value; }
     public Commit SecondParent { get => secondParent; set => secondParent = value; }
@@ -20,34 +37,104 @@ public class Commit {
     public string Tag { get => tag; set => tag = value; }
     public DateTime TimeStamp { get => timeStamp; set => timeStamp = value; }
     public UniqueID Id { get => id; set => id = value; }
-    public Dictionary<GameObject, List<PickUp>> Status { get => status; set => status = value; }
+    public Dictionary<string, List<string>> State { get => state; set => state = value; }
+    public string ParentOneID { get => parentOneID; set => parentOneID = value; }
+    public string ParentTwoID { get => parentTwoID; set => parentTwoID = value; }
 
     public Commit() { }
     public Commit(string _msg) { message = _msg; }
 
-    public void Init(Commit _parent, Commit _secondParent = null) {
+    public void Init(Commit _parent, Commit _secondParent = null, string _id = "") {
         id = new UniqueID();
-        id.GenerateCode();
+        if (string.IsNullOrEmpty(_id)) {
+            id.GenerateCode();
+        } else {
+            id.GenerateCode(_id);
+        }
+        
         Debug.Log(id.Code);
         timeStamp = DateTime.Now;
-        status = new Dictionary<GameObject, List<PickUp>>();
 
         parent = _parent;
         secondParent = _secondParent;
 
     }
 
-    public void SaveStatus(Dictionary<GameObject, List<PickUp>> _status = null) {
+    public void SaveStatus(Dictionary<string, List<string>> _status = null) {
         if (_status == null) {
-            status = new Dictionary<GameObject, List<PickUp>>();
+            state = new Dictionary<string, List<string>>();
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Container")) {
-                List<PickUp> temp = new List<PickUp>();
-                temp.AddRange(obj.GetComponent<Container>().PickUps);
-                status.Add(obj, temp);
+                List<string> temp = new List<string>();
+                foreach (GameObject _pickUp in obj.GetComponent<Container>().PickUps) {
+                    temp.Add(_pickUp.name.ToString());
+                }
+                state.Add(obj.name.ToString(), temp);
             }
         } else {
-            status = _status;
+            Dictionary<string, List<string>> temp = new Dictionary<string, List<string>>(_status);
+            state = temp;
         }
     }
 
+    public override void DrawEditor() {
+        using (new GUILayout.VerticalScope("Box")) {
+            GUILayout.Label("Parent 1 ID");
+            parentOneID = GUILayout.TextField(parentOneID);
+
+            GUILayout.Label("Parent 2 ID");
+            parentTwoID = GUILayout.TextField(parentTwoID);
+
+            GUILayout.Label("Message");
+            message = GUILayout.TextField(message);
+
+            GUILayout.Label("Tag");
+            tag = GUILayout.TextField(tag);
+
+            container = (GameObject) EditorGUILayout.ObjectField("Container: ", container, typeof(GameObject), true);
+
+            for (int i = 0; i < pickUps.Count; i++) {
+                pickUps[i] = (GameObject) EditorGUILayout.ObjectField("PickUp: ", pickUps[i], typeof(GameObject), true);
+            }
+
+            using (new GUILayout.HorizontalScope()) {
+                if (GUILayout.Button("add pickup")) {
+                    pickUps.Add(null);
+                }
+
+                if (pickUps.Count > 0) {
+                    if (GUILayout.Button("Remove pickup")) {
+                        pickUps.RemoveAt(pickUps.Count - 1);
+                    }
+                }
+            }
+            
+
+            if (GUILayout.Button("add entry")) {
+                List<string> newList = new List<string>();
+                foreach (GameObject _pickUp in pickUps) {
+                    newList.Add(_pickUp.name.ToString());
+                }
+                state.Add(container.name.ToString(), newList);
+                container = null;
+                pickUps = new List<GameObject>();
+            }
+
+            foreach (var key in state.Keys) {
+                using (new GUILayout.HorizontalScope()) {
+                    GUILayout.Label("Key:");
+                    GUILayout.Label(key);
+                    GUILayout.Label("Values:");
+                    foreach (string _pickUp in state[key]) {
+                        GUILayout.Label(_pickUp);
+                    }
+                    
+
+                    if (GUILayout.Button("-", GUILayout.Width(20))) {
+                        state.Remove(key);
+                    }
+                }
+            }
+        }
+
+    }
 }
