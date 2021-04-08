@@ -21,6 +21,7 @@ public class PickUp : MonoBehaviour
     private bool isHeld;
 
     public bool IsHeld { get => isHeld; set => isHeld = value; }
+    public Container ThisContainer { get => container; set => container = value; }
 
     private void Awake() {
         isHeld = false;

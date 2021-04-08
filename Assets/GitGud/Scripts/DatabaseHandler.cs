@@ -36,20 +36,18 @@ public class DatabaseHandler : MonoBehaviour
         levelsDB.LoadDatabase();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnApplicationQuit() {
+        runtimeDB.ClearDatabase();
+        runtimeDB.SaveDatabase();
     }
 
     public OrderedDictionary<string, DataboxObject.DatabaseEntry> LoadLevel(string _level) {
         return levelsDB.GetEntriesFromTable(_level);
+    }
+
+    public void SaveToRuntime(string _level, string _branch, Commit _commit) {
+        runtimeDB.AddData(_level, _branch, _commit.Id.Code, _commit);
+        runtimeDB.SaveDatabase();
     }
 
     private void OnDataReady() {

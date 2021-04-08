@@ -44,7 +44,7 @@ public class Commit : DataboxType {
     public Commit() { }
     public Commit(string _msg) { message = _msg; }
 
-    public void Init(Commit _parent, Commit _secondParent = null, string _id = "") {
+    public void Init(Commit _parent, Commit _secondParent = null, string _id = null, Dictionary<string, List<string>> _status = null) {
         id = new UniqueID();
         if (string.IsNullOrEmpty(_id)) {
             id.GenerateCode();
@@ -52,11 +52,20 @@ public class Commit : DataboxType {
             id.GenerateCode(_id);
         }
         
-        Debug.Log(id.Code);
+        Debug.Log(id.GetCode());
         timeStamp = DateTime.Now;
 
         parent = _parent;
+        if (parent != null) {
+            parentOneID = parent.id.Code;
+        }
+        
         secondParent = _secondParent;
+        if (secondParent != null) {
+            parentTwoID = secondParent.id.Code;
+        }
+
+        SaveStatus(_status);
 
     }
 
@@ -135,6 +144,5 @@ public class Commit : DataboxType {
                 }
             }
         }
-
     }
 }

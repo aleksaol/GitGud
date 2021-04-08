@@ -19,6 +19,8 @@ public class GitHandler : MonoBehaviour {
     private Branch currentBranch;
     private Commit currentCommit;
 
+    private string levelTable;
+
     public List<Branch> Branches { get => branches; set => branches = value; }
     public Branch CurrentBranch { get => currentBranch; set => currentBranch = value; }
     public Commit CurrentCommit { get => currentCommit; set => currentCommit = value; }
@@ -27,27 +29,9 @@ public class GitHandler : MonoBehaviour {
     private void Awake() {
 
         branches = new List<Branch>();
+        levelTable = SceneManager.GetActiveScene().name;
 
         StartCoroutine(LoadDatabaseRoutine());
-
-        /*if (CheckBranchName(main)) {
-            Branch temp = new Branch(main);
-            temp.Init(null);
-            branches.Add(temp);
-            currentBranch = FindBranch(main);
-        }
-
-        
-        if (currentBranch == null) {
-            Debug.LogError("NO MAIN BRANCH CREATED");
-        } else {
-            currentCommit = new Commit("Initial Commit");
-            currentCommit.Init(null);
-            currentCommit.SaveStatus();
-            currentBranch.Commits.Add(currentCommit);
-        }
-
-        LoadCurrentCommit();*/
 
     }
 
@@ -57,7 +41,6 @@ public class GitHandler : MonoBehaviour {
         }
 
         string main = "Main";
-        string levelTable = SceneManager.GetActiveScene().name;
 
         OrderedDictionary<string, DataboxObject.DatabaseEntry> data = databaseHandler.LoadLevel(levelTable);
 
@@ -66,7 +49,6 @@ public class GitHandler : MonoBehaviour {
 
             if (CheckBranchName(entryBranch)) {
                 Branch tempBranch = new Branch(entryBranch);
-                tempBranch.Init(null);
                 branches.Add(tempBranch);
 
                 Dictionary<string, Dictionary<Type, DataboxType>> valueCommits = databaseHandler.RuntimeDB.GetValuesFromEntry(levelTable, entryBranch);
@@ -75,9 +57,8 @@ public class GitHandler : MonoBehaviour {
                     Commit tempCommit = databaseHandler.RuntimeDB.GetData<Commit>(levelTable, entryBranch, valueCommit);
 
                     Commit newCommit = new Commit(tempCommit.Message);
-                    newCommit.Init(FindCommit(tempCommit.ParentOneID), FindCommit(tempCommit.ParentTwoID), valueCommit);
+                    newCommit.Init(FindCommit(tempCommit.ParentOneID), FindCommit(tempCommit.ParentTwoID), valueCommit, tempCommit.State);
                     newCommit.Tag = tempCommit.Tag;
-                    newCommit.SaveStatus(tempCommit.State);
                     tempBranch.Commits.Add(newCommit);
                 }
             } else {
@@ -119,24 +100,28 @@ public class GitHandler : MonoBehaviour {
             Debug.Log("NOT A GIT COMMAND");
             return UNKNOWN_GIT + HELP;
         } else {
-            string feedback = "";
+            string feedback = UNKNOWN_GIT + HELP;
+            string arg;
+
+            if (cmds.Length < 3) {
+                return "No name or argument given";
+            }
 
             switch (cmds[1]) {
                 case "commit":
-                    if (cmds.Length < 3) {
-                        // No commit message recieved
-                        // Open window to enter message
-                        feedback = "No commit message.";
+                    if (!cmds[2].Equals("-m")) {
+                        return "Unkown argument provided. Try -M for message";
                     } else {
-                        string msg = cmd.Substring(11).TrimStart(' ');
+                        string msg = cmd.Substring(14);
+
+                        msg = msg.TrimEnd(' ');
+
                         if (string.IsNullOrWhiteSpace(msg)) {
-                            feedback = "No commit message.";
-                            break;
+                            return "No commit message.";
                         } else {
-                            Commit(msg);
+                            return Commit(msg);
                         }
                     }
-                    break;
                 case "fetch":
                     break;
                 case "push":
@@ -144,9 +129,35 @@ public class GitHandler : MonoBehaviour {
                 case "pull":
                     break;
                 case "branch":
-                    break;
+                    arg = cmd.Substring(11);
+
+                    if (CheckBranchName(arg)) {
+                        NewBranch(arg);
+                        return Checkout(arg, true);
+                    } else {
+                        return "Branch " + arg + " already exists.";
+                    }
                 case "checkout":
-                    break;
+                    if (cmds[2].Equals("-b")) {
+                        arg = cmd.Substring(16);
+
+                        if (CheckBranchName(arg)) {
+                            NewBranch(arg);
+                            return Checkout(arg, true);
+                        } else {
+                            return "Branch " + arg + " already exists.";
+                        }
+                    } else {
+                        string checkout = cmd.Substring(13);
+
+                        if (FindBranch(checkout) != null) {
+                            return Checkout(checkout, true);
+                        } else if (FindCommit(checkout) != null) {
+                            return Checkout(checkout, false);
+                        } else {
+                            return "No branch or commit found";
+                        }
+                    }
                 case "merge":
                     break;
                 case "rebase":
@@ -158,83 +169,74 @@ public class GitHandler : MonoBehaviour {
                 case "tag":
                     break;
                 default:
-                    feedback = UNKNOWN_GIT + HELP;
-                    break;
+                    return UNKNOWN_GIT + HELP;
             }
 
             return feedback;
         }
     }
 
-    public void Commit(string _msg) {
+    public string Commit(string _msg) {
 
         if (_msg.Length <= 0) {
             // Open window to enter message
             Debug.Log("NO COMMIT MESSAGE");
+            return "No commit message provided";
         } else if (currentBranch == null) {
-            Commit temp = new Commit(_msg);
-            temp.Init(currentCommit);
-            temp.SaveStatus();
-            currentCommit = temp;
-            currentBranch.Commits.Add(currentCommit);
+            return "Not on any branches";
         } else {
             Commit temp = new Commit(_msg);
             temp.Init(currentCommit);
-            temp.SaveStatus();
             currentCommit = temp;
             currentBranch.Commits.Add(currentCommit);
+            databaseHandler.SaveToRuntime(levelTable, currentBranch.Name, currentCommit);
+            return "Commit created";
         }
     }
 
     public void Fetch() { }
     public void Push() { }
     public void Pull() { }
-    public void Branch() { }
-    public void Checkout(string _ID, bool _isBranch) {
-        Commit commitToCheckout = null;
-        Branch branchToCheckout = null;
-        bool found = false;
+    public string NewBranch(string _branch) {
+        string feedback = "Branch " + _branch;
+
+        if (CheckBranchName(_branch)) {
+            Branch temp = new Branch(_branch);
+            temp.Commits.Add(currentCommit);
+            branches.Add(temp);
+            databaseHandler.SaveToRuntime(levelTable, temp.Name, currentCommit);
+            return feedback + " created.";
+        } else {
+            return feedback + " already exists.";
+        }
+    }
+    public string Checkout(string _ID, bool _isBranch) {
+        
         
         if (_isBranch) {
-            foreach (Branch branch in branches) {
-                if (branch.Name.ToLower().Equals(_ID.ToLower())) {
-                    branchToCheckout = branch;
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                Debug.Log("NO BRANCH WITH THAT NAME FOUND");
-                return;
+            Branch branch = FindBranch(_ID);
+            if (branch != null) {
+                currentBranch = branch;
+                currentCommit = currentBranch.Commits[currentBranch.Commits.Count - 1];
+                LoadCurrentCommit();
+                return "Checked out branch: " + currentBranch.Name;
             }
         } else {
-            foreach (Branch branch in branches) {
-                commitToCheckout = branch.FindCommit(_ID);
+            Commit commit = FindCommit(_ID);
 
-                if (commitToCheckout != null) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                Debug.Log("NO COMMIT WITH THAT CODE FOUND");
-                return;
+            if (commit != null) {
+                currentBranch = null;
+                currentCommit = commit;
+                LoadCurrentCommit();
+                return "Checked out commit: " + currentCommit.Id.Code + ". Warning! Detached HEAD mode.";
             }
         }
 
-        if (branchToCheckout != null) {
-            currentBranch = branchToCheckout;
-            currentCommit = currentBranch.Commits[currentBranch.Commits.Count - 1];
-        } else if (commitToCheckout != null) {
-            currentBranch = null;
-            currentCommit = commitToCheckout;
+        if (_isBranch) {
+            return "No branch with name " + _ID + " was found.";
+        } else {
+            return "No commit with ID " + _ID + " was found.";
         }
-
-        LoadCurrentCommit();
-        
-        Debug.Log("Current commit ID: " + currentCommit.Id.Code);
         
     }
     public void Merge() { }
@@ -290,6 +292,7 @@ public class GitHandler : MonoBehaviour {
                 
                 foreach (string _objName in tempList) {
                     GameObject temp = GameObject.Find(_objName);
+                    temp.GetComponent<PickUp>().ThisContainer = _obj.GetComponent<Container>();
                     _obj.GetComponent<Container>().PickUps.Add(temp);
                 }
 

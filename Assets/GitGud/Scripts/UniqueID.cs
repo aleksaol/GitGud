@@ -8,15 +8,19 @@ public class UniqueID
     public const string SRC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     public const int CODE_LENGTH = 4;
 
-    private System.Random RNG;
+    private readonly System.Random RNG;
 
     [SerializeField]
     private string code;
+    [SerializeField]
+    private string corruptCode;
 
-    public string Code { get => code; set => code = value; }
+    private bool corrupt;
 
+    public string Code { get => code; }
 
-    public UniqueID() { RNG = new System.Random(); }
+    public UniqueID() { RNG = new System.Random(); corrupt = false; }
+    public UniqueID(bool _corrupt) { RNG = new System.Random(); corrupt = _corrupt; }
 
     public void GenerateCode(string _code = "") {
         
@@ -46,6 +50,14 @@ public class UniqueID
             } while (codes.Contains(code));
 
             codes.Add(code);
+        }
+    }
+
+    public string GetCode() {
+        if (corrupt) {
+            return corruptCode;
+        } else {
+            return code;
         }
     }
 }

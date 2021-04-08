@@ -55,29 +55,6 @@
                                     "parentTwoID": "",
                                     "$type": "Commit"
                                 }
-                            },
-                            "KOW2": {
-                                "Commit": {
-                                    "message": "Placed all books and sorted according to rainbow colors",
-                                    "tag": "Rainbow",
-                                    "timeStamp": "0001-01-01T00:00:00.0000000",
-                                    "id": null,
-                                    "state": {
-                                        "Shelf 2": [
-                                            "Book Red",
-                                            "Book Orange",
-                                            "Book Yellow",
-                                            "Book Green",
-                                            "Book Blue",
-                                            "Book Indigo",
-                                            "Book Violet"
-                                        ],
-                                        "Shelf 3": []
-                                    },
-                                    "parentOneID": "O7N2",
-                                    "parentTwoID": "",
-                                    "$type": "Commit"
-                                }
                             }
                         }
                     }
