@@ -52,7 +52,6 @@ public class Commit : DataboxType {
             id.GenerateCode(_id);
         }
         
-        Debug.Log(id.GetCode());
         timeStamp = DateTime.Now;
 
         parent = _parent;
@@ -84,7 +83,7 @@ public class Commit : DataboxType {
             state = temp;
         }
     }
-
+    
     public override void DrawEditor() {
         using (new GUILayout.VerticalScope("Box")) {
             GUILayout.Label("Parent 1 ID");

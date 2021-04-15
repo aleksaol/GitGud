@@ -9,6 +9,7 @@ TagManager:
   - InteractableContainer
   - Mesh
   - Transparent
+  - Commit
   layers:
   - Default
   - TransparentFX

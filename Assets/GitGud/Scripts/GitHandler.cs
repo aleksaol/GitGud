@@ -14,6 +14,8 @@ public class GitHandler : MonoBehaviour {
 
     [SerializeField]
     private DatabaseHandler databaseHandler;
+    [SerializeField]
+    private GitTreeHandler gitTree;
 
     private List<Branch> branches;
     private Branch currentBranch;
@@ -55,11 +57,16 @@ public class GitHandler : MonoBehaviour {
 
                 foreach (string valueCommit in valueCommits.Keys) {
                     Commit tempCommit = databaseHandler.RuntimeDB.GetData<Commit>(levelTable, entryBranch, valueCommit);
+                    Commit testCommit = FindCommit(valueCommit);
 
-                    Commit newCommit = new Commit(tempCommit.Message);
-                    newCommit.Init(FindCommit(tempCommit.ParentOneID), FindCommit(tempCommit.ParentTwoID), valueCommit, tempCommit.State);
-                    newCommit.Tag = tempCommit.Tag;
-                    tempBranch.Commits.Add(newCommit);
+                    if (testCommit == null) {
+                        Commit newCommit = new Commit(tempCommit.Message);
+                        newCommit.Init(FindCommit(tempCommit.ParentOneID), FindCommit(tempCommit.ParentTwoID), valueCommit, tempCommit.State);
+                        newCommit.Tag = tempCommit.Tag;
+                        tempBranch.Commits.Add(newCommit);
+                    } else {
+                        tempBranch.Commits.Add(testCommit);
+                    }
                 }
             } else {
                 Debug.LogError("ERROR! Branch alreday exists!");
@@ -67,6 +74,7 @@ public class GitHandler : MonoBehaviour {
         }
 
         Checkout(main, true);
+        gitTree.InitTree();
 
         Debug.Log("Current branch: " + currentBranch.Name);
         Debug.Log("Current commit: " + currentCommit.Id.Code);
@@ -190,6 +198,7 @@ public class GitHandler : MonoBehaviour {
             currentCommit = temp;
             currentBranch.Commits.Add(currentCommit);
             databaseHandler.SaveToRuntime(levelTable, currentBranch.Name, currentCommit);
+            gitTree.CreateCommitNode(currentBranch.Name, currentCommit);
             return "Commit created";
         }
     }
@@ -205,6 +214,7 @@ public class GitHandler : MonoBehaviour {
             temp.Commits.Add(currentCommit);
             branches.Add(temp);
             databaseHandler.SaveToRuntime(levelTable, temp.Name, currentCommit);
+            gitTree.CreateBranchNode(_branch, currentCommit);
             return feedback + " created.";
         } else {
             return feedback + " already exists.";
@@ -250,6 +260,14 @@ public class GitHandler : MonoBehaviour {
     /*
      *  HELPER FUNCTIONS
      */
+    public int GetIndexOfBranch(string _branch) {
+        return branches.IndexOf(FindBranch(_branch));
+    }
+
+    public int GetIndexOfCommit(Commit _commit, string _branch) {
+        return FindBranch(_branch).Commits.IndexOf(_commit);
+    }
+
     private bool CheckBranchName(string _name) {
         foreach (Branch branch in branches) {
             if (_name.ToLower() == branch.Name.ToLower()) {

@@ -6,7 +6,7 @@
                 {
                     "Key": "Main",
                     "Value": {
-                        "selected": true,
+                        "selected": false,
                         "data": {
                             "FL93": {
                                 "Commit": {
@@ -35,6 +35,62 @@
                             "O7N2": {
                                 "Commit": {
                                     "message": "Moved some books around",
+                                    "tag": null,
+                                    "timeStamp": "0001-01-01T00:00:00.0000000",
+                                    "id": null,
+                                    "state": {
+                                        "Shelf 2": [
+                                            "Book Yellow",
+                                            "Book Violet",
+                                            "Book Green",
+                                            "Book Blue"
+                                        ],
+                                        "Shelf 3": [
+                                            "Book Indigo",
+                                            "Book Red",
+                                            "Book Orange"
+                                        ]
+                                    },
+                                    "parentOneID": "FL93",
+                                    "parentTwoID": "",
+                                    "$type": "Commit"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "Key": "Test",
+                    "Value": {
+                        "selected": true,
+                        "data": {
+                            "FL93": {
+                                "Commit": {
+                                    "message": "Initial Commit",
+                                    "tag": "Init",
+                                    "timeStamp": "0001-01-01T00:00:00.0000000",
+                                    "id": null,
+                                    "state": {
+                                        "Shelf 2": [
+                                            "Book Yellow",
+                                            "Book Violet",
+                                            "Book Orange"
+                                        ],
+                                        "Shelf 3": [
+                                            "Book Indigo",
+                                            "Book Red",
+                                            "Book Green",
+                                            "Book Blue"
+                                        ]
+                                    },
+                                    "parentOneID": "",
+                                    "parentTwoID": "",
+                                    "$type": "Commit"
+                                }
+                            },
+                            "02NR": {
+                                "Commit": {
+                                    "message": "Something",
                                     "tag": null,
                                     "timeStamp": "0001-01-01T00:00:00.0000000",
                                     "id": null,
