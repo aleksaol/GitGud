@@ -10,6 +10,7 @@ TagManager:
   - Mesh
   - Transparent
   - Commit
+  - Bookshelf
   layers:
   - Default
   - TransparentFX

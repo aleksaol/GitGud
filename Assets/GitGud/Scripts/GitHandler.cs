@@ -310,7 +310,6 @@ public class GitHandler : MonoBehaviour {
                 
                 foreach (string _objName in tempList) {
                     GameObject temp = GameObject.Find(_objName);
-                    temp.GetComponent<PickUp>().ThisContainer = _obj.GetComponent<Container>();
                     _obj.GetComponent<Container>().PickUps.Add(temp);
                 }
 

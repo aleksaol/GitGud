@@ -82,6 +82,7 @@ public class CharacterController : MonoBehaviour
     private bool lockCamera;
 
     public bool OpenMenu { get => lockCamera; set => lockCamera = value; }
+    public GameObject HeldObject { get => heldObject; set => heldObject = value; }
 
     void OnEnable() {
         m_TargetCameraState.SetFromTransform(transform);
@@ -115,12 +116,12 @@ public class CharacterController : MonoBehaviour
             // Create a vector at the center of our camera's viewport
             Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
 
-            Debug.DrawRay(transform.position, cam.transform.forward * 999999.0f, Color.red);
+            Debug.DrawRay(transform.position, cam.transform.forward * 99999.0f, Color.red);
 
             if (heldObject != null) {
                 targetObject = null;
 
-                if (Physics.Raycast(rayOrigin, cam.transform.forward, out hit, 999999.0f, NotinteractableLayerMask)) {
+                if (Physics.Raycast(rayOrigin, cam.transform.forward, out hit, 99999.0f, NotinteractableLayerMask)) {
                     Debug.DrawRay(transform.position, cam.transform.forward * hit.distance, Color.yellow);
                     if (hit.transform.CompareTag("Container")) {
                         targetContainer = hit.transform.gameObject;
@@ -171,8 +172,8 @@ public class CharacterController : MonoBehaviour
         }
 
         if (Input.GetMouseButtonUp(0) && !lockCamera) {
-            PickUpObject();
-            PlaceObject();
+            /*PickUpObject();
+            PlaceObject();*/
         }
         
 
@@ -249,10 +250,10 @@ public class CharacterController : MonoBehaviour
         consoleHandler.ToggleConsole();
         
     }
-
+    /*
     private void PickUpObject() {
         if (heldObject == null && targetObject != null) {
-            targetObject.GetComponent<PickUp>().OnPickUp();
+            targetObject.GetComponent<Book>().OnPickUp();
             heldObject = targetObject;
         }
         
@@ -260,8 +261,8 @@ public class CharacterController : MonoBehaviour
 
     private void PlaceObject() {
         if (heldObject != null && targetContainer != null) {
-            heldObject.GetComponent<PickUp>().OnPlacement(targetContainer.GetComponent<Container>());
+            heldObject.GetComponent<Book>().OnPlacement(targetContainer.GetComponent<Container>());
             heldObject = null;
         }
-    }
+    }*/
 }
