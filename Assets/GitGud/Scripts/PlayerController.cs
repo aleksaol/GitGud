@@ -18,9 +18,20 @@ public class PlayerController : MonoBehaviour
 
     private Book heldBook;
 
+    private bool advancedGit = false;
+
+    private int points;
+    private int tryPoints;
+    private int pointsToNextLevel;
+    private int currentLevel;
+
 
     public Book HeldBook { get => heldBook; set => heldBook = value; }
     public Inventory Inventory { get => inventory; set => inventory = value; }
+    public int Points { get => points; set => points = value; }
+    public int TryPoints { get => tryPoints; set => tryPoints = value; }
+    public int PointsToNextLevel { get => pointsToNextLevel; set => pointsToNextLevel = value; }
+    public bool AdvancedGit { get => advancedGit; set => advancedGit = value; }
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -28,6 +39,11 @@ public class PlayerController : MonoBehaviour
         } else {
             _instance = this;
         }
+
+        points = 0;
+        currentLevel = 0;
+        PointsToNextLevel = 20;
+
     }
 
     // Start is called before the first frame update
@@ -58,7 +74,25 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
-    public bool TryPlaceBook() {
-        return false;
+    public void AddPoints(int _amount) {
+        points += _amount;
+        if (points >= pointsToNextLevel) {
+            NextLevel();
+        }
+        tryPoints = points;
+    }
+
+    public void AddCalculatedPoints(int _amount) {
+        tryPoints += _amount;
+    }
+
+    public void NextLevel() {
+        
+        do {
+            currentLevel++;
+            points -= pointsToNextLevel;
+            pointsToNextLevel += (5 * currentLevel) + 10;
+        } while (points >= pointsToNextLevel);
+        
     }
 }

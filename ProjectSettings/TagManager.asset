@@ -11,6 +11,7 @@ TagManager:
   - Transparent
   - Commit
   - Bookshelf
+  - Book
   layers:
   - Default
   - TransparentFX

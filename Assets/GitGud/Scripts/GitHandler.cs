@@ -8,6 +8,14 @@ using UnityEngine.SceneManagement;
 
 public class GitHandler : MonoBehaviour {
 
+    private static GitHandler _instance;
+
+    public static GitHandler Instance {
+        get {
+            return _instance;
+        }
+    }
+
     public const string NOT_GIT = "Not a Git command. ";
     public const string UNKNOWN_GIT = "Unknown Git command. ";
     public const string HELP = "Type 'Help' for help.";
@@ -29,6 +37,11 @@ public class GitHandler : MonoBehaviour {
 
 
     private void Awake() {
+        if (_instance != null && _instance != this) {
+            Destroy(gameObject);
+        } else {
+            _instance = this;
+        }
 
         branches = new List<Branch>();
         levelTable = SceneManager.GetActiveScene().name;

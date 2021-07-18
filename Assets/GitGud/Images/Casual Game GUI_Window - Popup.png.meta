@@ -1,0 +1,539 @@
+fileFormatVersion: 2
+guid: b9ccf0e368013fb40bb296d704dae53e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5719649679204370240
+    second: Casual Game GUI_Window - Popup_0
+  - first:
+      213: 4434323748758794711
+    second: Casual Game GUI_Window - Popup_1
+  - first:
+      213: -3004396435741387853
+    second: Casual Game GUI_Window - Popup_2
+  - first:
+      213: -7569776900406334186
+    second: Casual Game GUI_Window - Popup_3
+  - first:
+      213: -2601545638898156037
+    second: Casual Game GUI_Window - Popup_4
+  - first:
+      213: 8818990124597268643
+    second: Casual Game GUI_Window - Popup_5
+  - first:
+      213: 6143844008076929140
+    second: Casual Game GUI_Window - Popup_6
+  - first:
+      213: -8498304928056105300
+    second: Casual Game GUI_Window - Popup_7
+  - first:
+      213: 7689984734884501195
+    second: Casual Game GUI_Window - Popup_8
+  - first:
+      213: 3812069434715005357
+    second: Casual Game GUI_Window - Popup_9
+  - first:
+      213: 6821912934236162002
+    second: Casual Game GUI_Window - Popup_10
+  - first:
+      213: -3900261174174051284
+    second: Casual Game GUI_Window - Popup_11
+  - first:
+      213: -4891613305797495361
+    second: Casual Game GUI_Window - Popup_12
+  - first:
+      213: 8930756309147187224
+    second: Casual Game GUI_Window - Popup_13
+  - first:
+      213: -514648383959389712
+    second: Casual Game GUI_Window - Popup_14
+  - first:
+      213: -6408106023349234894
+    second: Casual Game GUI_Window - Popup_15
+  - first:
+      213: 8275681112870648725
+    second: Casual Game GUI_Window - Popup_16
+  - first:
+      213: 1921008833143132214
+    second: Casual Game GUI_Window - Popup_17
+  - first:
+      213: 5900968795774749089
+    second: Casual Game GUI_Window - Popup_18
+  - first:
+      213: -4214284033349857524
+    second: Casual Game GUI_Window - Popup_19
+  - first:
+      213: 6499106058660264822
+    second: Casual Game GUI_Window - Popup_20
+  - first:
+      213: 2632969331904944700
+    second: Casual Game GUI_Window - Popup_21
+  - first:
+      213: 5830488751130579087
+    second: Casual Game GUI_Window - Popup_22
+  - first:
+      213: -2348511955370138705
+    second: Casual Game GUI_Window - Popup_23
+  - first:
+      213: -6882383783847874726
+    second: Casual Game GUI_Window - Popup_24
+  - first:
+      213: -2832548854651817877
+    second: Casual Game GUI_Window - Popup_25
+  - first:
+      213: 3846872320746713676
+    second: Casual Game GUI_Window - Popup_26
+  - first:
+      213: 6778120214034458855
+    second: Casual Game GUI_Window - Popup_27
+  - first:
+      213: 3863371682704941662
+    second: Casual Game GUI_Window - Popup_28
+  - first:
+      213: -3602558096824296646
+    second: Casual Game GUI_Window - Popup_29
+  - first:
+      213: -2347430947278086193
+    second: Casual Game GUI_Window - Popup_30
+  - first:
+      213: -4675783939000824795
+    second: Casual Game GUI_Window - Popup_31
+  - first:
+      213: -3179842947091587240
+    second: Casual Game GUI_Window - Popup_32
+  - first:
+      213: 4358656764316661075
+    second: Casual Game GUI_Window - Popup_33
+  - first:
+      213: -5268113049535973342
+    second: Casual Game GUI_Window - Popup_34
+  - first:
+      213: -4203834931177506448
+    second: Casual Game GUI_Window - Popup_35
+  - first:
+      213: 6984837103317798947
+    second: Casual Game GUI_Window - Popup_36
+  - first:
+      213: -2882581819927381150
+    second: Casual Game GUI_Window - Popup_37
+  - first:
+      213: 1957249736064128700
+    second: Casual Game GUI_Window - Popup_38
+  - first:
+      213: 6956378483671247978
+    second: Casual Game GUI_Window - Popup_39
+  - first:
+      213: -1250994578843392133
+    second: Casual Game GUI_Window - Popup_40
+  - first:
+      213: -6220504367236794285
+    second: Casual Game GUI_Window - Popup_41
+  - first:
+      213: -7023676392136193052
+    second: Casual Game GUI_Window - Popup_42
+  - first:
+      213: 2758587668578385422
+    second: Casual Game GUI_Window - Popup_43
+  - first:
+      213: 724827445055425639
+    second: Casual Game GUI_Window - Popup_44
+  - first:
+      213: 949896482699654117
+    second: Casual Game GUI_Window - Popup_45
+  - first:
+      213: 5446958322852759147
+    second: Casual Game GUI_Window - Popup_46
+  - first:
+      213: -682274348315050661
+    second: Casual Game GUI_Window - Popup_47
+  - first:
+      213: 1485331201609263760
+    second: Casual Game GUI_Window - Popup_48
+  - first:
+      213: 8488756622220410726
+    second: Casual Game GUI_Window - Popup_49
+  - first:
+      213: -7844116126298488369
+    second: Casual Game GUI_Window - Popup_50
+  - first:
+      213: 3287624063688810256
+    second: Casual Game GUI_Window - Popup_51
+  - first:
+      213: 255397252773531201
+    second: Casual Game GUI_Window - Popup_52
+  - first:
+      213: -5946623625910708360
+    second: Casual Game GUI_Window - Popup_53
+  - first:
+      213: 4150002545666036999
+    second: Casual Game GUI_Window - Popup_54
+  - first:
+      213: -6936005440211951718
+    second: Casual Game GUI_Window - Popup_55
+  - first:
+      213: 4866238014888655450
+    second: Casual Game GUI_Window - Popup_56
+  - first:
+      213: -2297698665770163626
+    second: Casual Game GUI_Window - Popup_57
+  - first:
+      213: -8621122281564650012
+    second: Casual Game GUI_Window - Popup_58
+  - first:
+      213: 462405519167238113
+    second: Casual Game GUI_Window - Popup_59
+  - first:
+      213: 2896468869250970669
+    second: Casual Game GUI_Window - Popup_60
+  - first:
+      213: 5569122913620037520
+    second: Casual Game GUI_Window - Popup_61
+  - first:
+      213: -3413795603988888592
+    second: Casual Game GUI_Window - Popup_62
+  - first:
+      213: -3284481166268583898
+    second: Casual Game GUI_Window - Popup_63
+  - first:
+      213: 2219807641687778496
+    second: Casual Game GUI_Window - Popup_64
+  - first:
+      213: 5401665054846712012
+    second: Casual Game GUI_Window - Popup_65
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: 2
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Casual Game GUI_Window - Popup_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 267
+        width: 240
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c8b857bbe8bf90b0800000000000000
+      internalID: -5719649679204370240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Casual Game GUI_Window - Popup_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 267
+        width: 240
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d1b8d794f1e98d30800000000000000
+      internalID: 4434323748758794711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Casual Game GUI_Window - Popup_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 267
+        width: 240
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b35f231c5d3e46d0800000000000000
+      internalID: -3004396435741387853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Casual Game GUI_Window - Popup_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 134
+        width: 240
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61da256f300c2f690800000000000000
+      internalID: -7569776900406334186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Casual Game GUI_Window - Popup_4
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 134
+        width: 240
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfd3286660475ebd0800000000000000
+      internalID: -2601545638898156037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Casual Game GUI_Window - Popup_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 134
+        width: 240
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a05c461bc8536a70800000000000000
+      internalID: 8818990124597268643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Casual Game GUI_Window - Popup_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 240
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47866d8e291534550800000000000000
+      internalID: 6143844008076929140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Casual Game GUI_Window - Popup_7
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 1
+        width: 240
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca6a342a1b4ff0a80800000000000000
+      internalID: -8498304928056105300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Casual Game GUI_Window - Popup_8
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1
+        width: 240
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc697f28f5058ba60800000000000000
+      internalID: 7689984734884501195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -30,30 +30,23 @@ public class Bookshelf : MonoBehaviour
         return false;
     }
 
-    public void Exit() {
-        if (player.HeldBook) {
-            Book book = player.HeldBook;
-
-            book.PickUp();
+    public void LockPositions() {
+        for (int i = 1; i <= NUM_SHELFS; i++) {
+            Transform shelf = transform.GetChild(i);
+            for (int j = 0; j < NUM_POS; j++) {
+                Transform shelfPos = shelf.GetChild(j);
+                if (shelfPos.childCount > 0) {
+                    Book book = shelfPos.GetChild(0).GetComponent<Book>();
+                    if (book != null) {
+                        if (book.State != BookState.LOCKED) {
+                            book.State = BookState.LOCKED;
+                            book.PlaceBook(shelfPos.gameObject);
+                            player.AddPoints(book.CalculatePoint());
+                        }
+                    }
+                }
+            }
         }
-    }
-
-    public void ConfirmPlacement() {
-        if (!player.HeldBook) {
-            return;
-        }
-
-        if (player.HeldBook.transform.parent == null) {
-            return;
-        }
-
-        Book book = player.HeldBook;
-        player.HeldBook = null;
-        ShelfPos pos = book.transform.parent.GetComponent<ShelfPos>();
-        positions[pos.Shelf.ShelfNr - 1, pos.PosNr - 1] = book.gameObject;
-
-        book.State = BookState.PLACED;
-        book.PlaceBook(book.transform.parent.gameObject);
     }
 
     public void RemoveBook (int _shelf, int _pos) {
@@ -98,11 +91,32 @@ public class Bookshelf : MonoBehaviour
 
 
     /*
-    private void InitShelfPos() {
-        for (int i = 1; i < transform.childCount; i++) {
-            for (int j = 0; j < transform.GetChild(i).childCount; j++) {
-                positions[i, j] = transform.GetChild(i).GetChild(j).gameObject;
-            }
+     * Functions called by event triggers
+     * */
+
+    public void Exit() {
+        if (player.HeldBook) {
+            Book book = player.HeldBook;
+
+            book.PickUp();
         }
-    }*/
+    }
+
+    public void ConfirmPlacement() {
+        if (!player.HeldBook) {
+            return;
+        }
+
+        if (player.HeldBook.transform.parent == null) {
+            return;
+        }
+
+        Book book = player.HeldBook;
+        player.HeldBook = null;
+        ShelfPos pos = book.transform.parent.GetComponent<ShelfPos>();
+        positions[pos.Shelf.ShelfNr - 1, pos.PosNr - 1] = book.gameObject;
+
+        book.State = BookState.PLACED;
+        book.PlaceBook(book.transform.parent.gameObject);
+    }
 }

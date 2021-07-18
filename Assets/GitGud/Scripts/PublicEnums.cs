@@ -6,4 +6,9 @@
     LOCKED
 }
 
+public enum BookType {
+    RED,
+    CLASSIC
+}
+
 

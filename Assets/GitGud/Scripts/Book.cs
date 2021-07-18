@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class Book : MonoBehaviour
 {
+    
     [SerializeField]
-    private Vector3 heldForward;
+    protected BookType type;
     [SerializeField]
-    private Vector3 heldUp;
+    protected int sizeX;
+    [SerializeField]
+    protected int sizeY;
+    [SerializeField]
+    protected int basePoints;
+    [SerializeField]
+    protected int bonusPoints;
+    [SerializeField]
+    protected string bonusText;
+    [SerializeField]
+    protected string curseText;
+
 
     private Camera cam;
     private GameObject visable;
@@ -20,7 +32,7 @@ public class Book : MonoBehaviour
     private BookState state;
 
     public BookState State { get => state; set => state = value; }
-
+    public BookType Type { get => type; set => type = value; }
 
     private void Awake() {
         state = BookState.INVENTORY;
@@ -37,15 +49,23 @@ public class Book : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (state == BookState.HELD) {
             
             Ray ray = Camera.main.ScreenPointToRay(inputManager.GetMouseScreenPosition());
 
             transform.position = ray.origin + (ray.direction * 0.5f);
-            transform.rotation = Quaternion.LookRotation(GetHeldForwardVector(), GetHeldUpVector());
+            transform.rotation = Quaternion.LookRotation(-cam.transform.right, cam.transform.up);
         }
+    }
+
+    public virtual int BonusPoints() {
+        return 0;
+    }
+
+    public virtual int CalculatePoint() {
+        return basePoints + BonusPoints();
     }
 
     public void TryPickUp() {
@@ -61,6 +81,7 @@ public class Book : MonoBehaviour
 
             if (state == BookState.PLACED) {
                 transform.parent.GetComponent<ShelfPos>().RemoveBook();
+                player.AddCalculatedPoints(-basePoints);
             }
 
             state = BookState.HELD;
@@ -84,43 +105,20 @@ public class Book : MonoBehaviour
             boxCollider.enabled = true;
         }
 
+        if (state == BookState.PLACED) {
+            player.AddCalculatedPoints(basePoints);
+        }
+
         if (state == BookState.INVENTORY || state == BookState.LOCKED) {
             visable.SetActive(true);
             transparent.SetActive(false);
         }
     }
 
-    private Vector3 GetHeldForwardVector() {
-        if (heldForward.x != 0.0f) {
-            return cam.transform.right * heldForward.x;
-        }
 
-        if (heldForward.y != 0.0f) {
-            return cam.transform.up * heldForward.y;
-        }
-
-        if (heldForward.z != 0.0f) {
-            return cam.transform.forward * heldForward.z;
-        }
-
-        return cam.transform.up;
-    }
-
-    private Vector3 GetHeldUpVector() {
-        if (heldUp.x != 0.0f) {
-            return cam.transform.right * heldUp.x;
-        }
-
-        if (heldUp.y != 0.0f) {
-            return cam.transform.up * heldUp.y;
-        }
-
-        if (heldUp.z != 0.0f) {
-            return cam.transform.forward * heldUp.z;
-        }
-
-        return cam.transform.up;
-    }
+    /*
+     * Functions called by event triggers
+     */
 
     public void Enter() {
         if (state == BookState.INVENTORY && player.HeldBook == null) {
@@ -133,4 +131,5 @@ public class Book : MonoBehaviour
             transform.localPosition -= Vector3.up * 0.1f;
         }
     }
+
 }

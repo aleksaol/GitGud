@@ -46,6 +46,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void SetCollider(bool _state) {
+        boxCollider.enabled = _state;
+    }
+
+    /*
+     * Functions called by event triggers.
+     */
+
     public void TryPlaceBook() {
         if (!player.HeldBook) {
             return;
@@ -58,9 +66,5 @@ public class Inventory : MonoBehaviour
         book.State = BookState.INVENTORY;
         book.PlaceBook(gameObject);
         OrderBooks();
-    }
-
-    public void SetCollider(bool _state) {
-        boxCollider.enabled = _state;
     }
 }
