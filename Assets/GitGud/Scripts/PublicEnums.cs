@@ -7,8 +7,13 @@
 }
 
 public enum BookType {
-    RED,
-    CLASSIC
+    CURSED,
+    CLASSIC,
+    DARK,
+    BOUNCY,
+    TALL,
+    WIDE,
+    GOLD
 }
 
 
