@@ -64,7 +64,7 @@ public class Commit : DataboxType {
             parentTwoID = secondParent.id.Code;
         }
 
-        SaveStatus(_status);
+        //SaveStatus(_status);
 
     }
 

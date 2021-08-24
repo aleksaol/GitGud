@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75ea6a3916b18ff4a9a464a8e88d2ea7, type: 2}
+  - {fileID: 2100000, guid: 3826007a8a70ddc4698e7337f35ec71f, type: 2}
   - {fileID: 2100000, guid: 707eb00f9135f1742a6334b1346f526b, type: 2}
   - {fileID: 2100000, guid: 65eef61b0f3cabf4087515aa17038cb5, type: 2}
   m_StaticBatchInfo:
@@ -139,7 +139,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 120780ddc839e4748b019673c3aaa7a0, type: 2}
+  - {fileID: 2100000, guid: 94533effaf9ab6e45b83fc1c258bda5f, type: 2}
   - {fileID: 2100000, guid: b9676944e261b1f4ea5129c4fedce8e1, type: 2}
   - {fileID: 2100000, guid: 188b69e3407f5d64f9a03f79c2c2dc7f, type: 2}
   m_StaticBatchInfo:
@@ -253,7 +253,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4f1ecc2dcedc30b4c9d016e2ef55f819, type: 2}
+  - {fileID: 2100000, guid: 94533effaf9ab6e45b83fc1c258bda5f, type: 2}
   - {fileID: 2100000, guid: b9676944e261b1f4ea5129c4fedce8e1, type: 2}
   - {fileID: 2100000, guid: 188b69e3407f5d64f9a03f79c2c2dc7f, type: 2}
   m_StaticBatchInfo:
@@ -334,7 +334,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f3a1025c20e19246829d472ae1058cc, type: 2}
+  - {fileID: 2100000, guid: 3826007a8a70ddc4698e7337f35ec71f, type: 2}
   - {fileID: 2100000, guid: 707eb00f9135f1742a6334b1346f526b, type: 2}
   - {fileID: 2100000, guid: 65eef61b0f3cabf4087515aa17038cb5, type: 2}
   m_StaticBatchInfo:
@@ -448,7 +448,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 905d6538b48810244a8d7bb1abaf56ad, type: 2}
+  - {fileID: 2100000, guid: 94533effaf9ab6e45b83fc1c258bda5f, type: 2}
   - {fileID: 2100000, guid: b9676944e261b1f4ea5129c4fedce8e1, type: 2}
   - {fileID: 2100000, guid: 188b69e3407f5d64f9a03f79c2c2dc7f, type: 2}
   m_StaticBatchInfo:
@@ -529,7 +529,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eb2c8a6304c7a5f4d9e5f06dd9b9ce31, type: 2}
+  - {fileID: 2100000, guid: 3826007a8a70ddc4698e7337f35ec71f, type: 2}
   - {fileID: 2100000, guid: 707eb00f9135f1742a6334b1346f526b, type: 2}
   - {fileID: 2100000, guid: 65eef61b0f3cabf4087515aa17038cb5, type: 2}
   m_StaticBatchInfo:
@@ -561,11 +561,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8953785441709319972}
-  - component: {fileID: -4724985556808258381}
   - component: {fileID: 5807998921937698912}
+  - component: {fileID: -5833617067253085551}
   - component: {fileID: -1331426698375295259}
   m_Layer: 8
-  m_Name: Book
+  m_Name: BookofWater2
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -587,25 +587,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4724985556808258381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8955804662764934174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8d64b1b0a2963c49affa5735845c1b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  sizeX: 0
-  sizeY: 0
-  basePoints: 0
-  bonusPoints: 0
-  bonusText: 
-  curseText: 
 --- !u!65 &5807998921937698912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -619,6 +600,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.39, z: 0.435}
   m_Center: {x: 0, y: 0.018, z: 0}
+--- !u!114 &-5833617067253085551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955804662764934174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7642d96a82b711940b81215e0f8ffd3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  sizeX: 0
+  sizeY: 0
+  basePoints: 1
+  bonusPoints: 5
+  bonusText: 
+  curseText: 
 --- !u!114 &-1331426698375295259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,7 +636,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: -4724985556808258381}
+        - m_Target: {fileID: -5833617067253085551}
           m_MethodName: Enter
           m_Mode: 1
           m_Arguments:
@@ -651,7 +651,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: -4724985556808258381}
+        - m_Target: {fileID: -5833617067253085551}
           m_MethodName: Exit
           m_Mode: 1
           m_Arguments:
@@ -666,8 +666,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: -4724985556808258381}
-          m_MethodName: TryPickUp
+        - m_Target: {fileID: -5833617067253085551}
+          m_MethodName: PickUp
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

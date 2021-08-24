@@ -6,7 +6,6 @@ public class ShelfPos : MonoBehaviour
 {
     [SerializeField]
     private int posNr;
-    [SerializeField]
     private Shelf shelf;
 
     private PlayerController player;
@@ -16,15 +15,21 @@ public class ShelfPos : MonoBehaviour
 
     private void Start() {
         player = PlayerController.Instance;
+        shelf = GetComponentInParent<Shelf>();
     }
+
+    public void RemoveBook() {
+        shelf.Bookshelf.RemoveBook(shelf.ShelfNr, posNr);
+    }
+
+
+    /*
+     * Functions called by event triggers
+     * */
 
     public void Enter() {
         if (player.HeldBook) {
             shelf.Bookshelf.TryPlaceBook(shelf.ShelfNr, posNr);
         }
-    }
-
-    public void RemoveBook() {
-        shelf.Bookshelf.RemoveBook(shelf.ShelfNr, posNr);
     }
 }

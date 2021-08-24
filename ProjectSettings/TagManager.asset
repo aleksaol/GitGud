@@ -12,6 +12,7 @@ TagManager:
   - Commit
   - Bookshelf
   - Book
+  - Room
   layers:
   - Default
   - TransparentFX

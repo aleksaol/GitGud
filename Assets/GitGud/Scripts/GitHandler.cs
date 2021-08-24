@@ -22,8 +22,6 @@ public class GitHandler : MonoBehaviour {
 
     [SerializeField]
     private DatabaseHandler databaseHandler;
-    [SerializeField]
-    private GitTreeHandler gitTree;
 
     private List<Branch> branches;
     private Branch currentBranch;
@@ -46,8 +44,12 @@ public class GitHandler : MonoBehaviour {
         branches = new List<Branch>();
         levelTable = SceneManager.GetActiveScene().name;
 
-        StartCoroutine(LoadDatabaseRoutine());
+        //StartCoroutine(LoadDatabaseRoutine());
 
+    }
+
+    private void Start() {
+        
     }
 
     private IEnumerator LoadDatabaseRoutine() {
@@ -87,7 +89,6 @@ public class GitHandler : MonoBehaviour {
         }
 
         Checkout(main, true);
-        gitTree.InitTree();
 
         Debug.Log("Current branch: " + currentBranch.Name);
         Debug.Log("Current commit: " + currentCommit.Id.Code);
@@ -210,8 +211,7 @@ public class GitHandler : MonoBehaviour {
             temp.Init(currentCommit);
             currentCommit = temp;
             currentBranch.Commits.Add(currentCommit);
-            databaseHandler.SaveToRuntime(levelTable, currentBranch.Name, currentCommit);
-            gitTree.CreateCommitNode(currentBranch.Name, currentCommit);
+            //databaseHandler.SaveToRuntime(levelTable, currentBranch.Name, currentCommit);
             return "Commit created";
         }
     }
@@ -226,8 +226,7 @@ public class GitHandler : MonoBehaviour {
             Branch temp = new Branch(_branch);
             temp.Commits.Add(currentCommit);
             branches.Add(temp);
-            databaseHandler.SaveToRuntime(levelTable, temp.Name, currentCommit);
-            gitTree.CreateBranchNode(_branch, currentCommit);
+            //databaseHandler.SaveToRuntime(levelTable, temp.Name, currentCommit);
             return feedback + " created.";
         } else {
             return feedback + " already exists.";

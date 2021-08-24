@@ -21,7 +21,7 @@ public class Bookshelf : MonoBehaviour
         if (IsPositionAvailable(_shelf, _pos)) {
             Book book = player.HeldBook;
 
-            book.State = BookState.TRYPLACE;
+            book.State = BookState.TRY_PLACE;
             book.PlaceBook(transform.GetChild(_shelf).GetChild(_pos - 1).gameObject);
 
             return true;
@@ -30,7 +30,9 @@ public class Bookshelf : MonoBehaviour
         return false;
     }
 
-    public void LockPositions() {
+    public int CalculatePoints() {
+        int points = 0;
+
         for (int i = 1; i <= NUM_SHELFS; i++) {
             Transform shelf = transform.GetChild(i);
             for (int j = 0; j < NUM_POS; j++) {
@@ -38,15 +40,57 @@ public class Bookshelf : MonoBehaviour
                 if (shelfPos.childCount > 0) {
                     Book book = shelfPos.GetChild(0).GetComponent<Book>();
                     if (book != null) {
-                        if (book.State != BookState.LOCKED) {
-                            book.State = BookState.LOCKED;
-                            book.PlaceBook(shelfPos.gameObject);
-                            player.AddPoints(book.CalculatePoint());
-                        }
+                        // FIND WAY TO CALCULATE POINTS
+                    } else {
+                        Debug.LogError("Shelfpos has child object that is not a book");
                     }
                 }
             }
         }
+
+
+        player.AddPoints(points);
+        return points;
+    }
+
+    public bool CheckForChange() {
+
+        for (int i = 1; i <= NUM_SHELFS; i++) {
+            Transform shelf = transform.GetChild(i);
+            for (int j = 0; j < NUM_POS; j++) {
+                Transform shelfPos = shelf.GetChild(j);
+                if (shelfPos.childCount > 0) {
+                    Book book = shelfPos.GetChild(0).GetComponent<Book>();
+                    if (book != null) {
+                        if (book.State == BookState.PLACED) {
+                            return true;
+                        }
+                    } else {
+                        Debug.LogError("Shelfpos has child object that is not a book");
+                    }
+                }
+            }
+        }
+
+        return false;
+
+    }
+
+    public void SpawnBook() {
+        int shelf;
+        int shelfPos;
+
+        do {
+            shelf = Random.Range(1, NUM_SHELFS + 1);
+            shelfPos = Random.Range(1, NUM_POS + 1);
+
+        } while (!IsPositionAvailable(shelf, shelfPos));
+
+        Transform position = transform.GetChild(shelf).GetChild(shelfPos - 1);
+
+        int booktype = Random.Range(0, player.BookPrefabs.Count);
+        GameObject temp = Instantiate(player.BookPrefabs[booktype], position);
+        positions[shelf - 1, shelfPos - 1] = temp;
     }
 
     public void RemoveBook (int _shelf, int _pos) {

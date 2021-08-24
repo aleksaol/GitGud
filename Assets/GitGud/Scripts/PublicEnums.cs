@@ -1,19 +1,20 @@
 ﻿public enum BookState {
-    INVENTORY,
     HELD,
-    TRYPLACE,
+    TRY_PLACE,
     PLACED,
-    LOCKED
+    UNSTAGED,
+    STAGED
 }
 
 public enum BookType {
     CURSED,
-    CLASSIC,
-    DARK,
-    BOUNCY,
-    TALL,
-    WIDE,
-    GOLD
+    WATER,
+    AIR,
+    NATURE,
+    FIRE,
+    SUN,
+    DARKNESS,
+    DIRT
 }
 
 
